@@ -1,0 +1,193 @@
+directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
+
+"""
+Direct the client to resolve this field locally, either from the cache or local resolvers.
+"""
+directive @client(
+  """
+  When true, the client will never use the cache for this value. See
+  https://www.apollographql.com/docs/react/essentials/local-state/#forcing-resolvers-with-clientalways-true
+  """
+  always: Boolean
+) on FIELD | FRAGMENT_DEFINITION | INLINE_FRAGMENT
+
+"""
+Export this locally resolved field as a variable to be used in the remainder of this query. See
+https://www.apollographql.com/docs/react/essentials/local-state/#using-client-fields-as-variables
+"""
+directive @export(
+  """The variable name to export this field as."""
+  as: String!
+) on FIELD
+
+"""
+Specify a custom store key for this result. See
+https://www.apollographql.com/docs/react/advanced/caching/#the-connection-directive
+"""
+directive @connection(
+  """Specify the store key."""
+  key: String!
+
+  """
+  An array of query argument names to include in the generated custom store key.
+  """
+  filter: [String!]
+) on FIELD
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+type Query {
+  me: User
+  allFilms: [Film]
+  film(id: ID!): Film
+  allPeople: [Person]
+  person(id: ID!): Person
+  allPlanets: [Planet]
+  planet(id: ID!): Planet
+  allSpecies: [Species]
+  species(id: ID!): Species
+  allStarships: [Starship]
+  starship(id: ID!): Starship
+  allVehicles: [Vehicle]
+  vehicle(id: ID!): Vehicle
+}
+
+type User {
+  id: ID!
+  email: String
+  createdAtAt: DateTime
+}
+
+type AuthenticatedUser {
+  user: User
+  token: String
+}
+
+type Mutation {
+  signup(email: String!, password: String!): AuthenticatedUser
+  login(email: String!, password: String!): AuthenticatedUser
+}
+
+type Person {
+  id: ID!
+  name: String
+  birthYear: String
+  eyeColor: String
+  gender: String
+  hairColor: String
+  height: Int
+  mass: Float
+  skinColor: String
+  homeworld: Planet
+  films: [Film]
+  species: Species
+  image: String
+  starships: [Starship]
+  vehicles: [Vehicle]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Planet {
+  id: ID!
+  name: String
+  diameter: Int
+  rotationPeriod: Int
+  orbitalPeriod: Int
+  gravity: String
+  population: Int
+  climate: String
+  terrain: String
+  surfaceWater: Float
+  residents: [Person]
+  films: [Film]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Species {
+  id: ID!
+  name: String
+  classification: String
+  designation: String
+  averageHeight: Float
+  averageLifespan: Int
+  eyeColors: [String]
+  hairColors: [String]
+  skinColors: [String]
+  language: String
+  homeworld: Planet
+  people: [Person]
+  films: [Film]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Starship {
+  id: ID!
+  name: String
+  model: String
+  starshipClass: String
+  manufacturer: String
+  costInCredits: Float
+  length: Float
+  crew: String
+  passengers: String
+  maxAtmospheringSpeed: Int
+  hyperdriveRating: Float
+  mglt: Int
+  image: String
+  cargoCapacity: Float
+  consumables: String
+  pilots: [Person]
+  films: [Film]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Vehicle {
+  id: ID!
+  name: String
+  model: String
+  vehicleClass: String
+  manufacturer: String
+  costInCredits: Int
+  length: Float
+  crew: String
+  passengers: String
+  maxAtmospheringSpeed: Int
+  cargoCapacity: Int
+  consumables: String
+  pilots: [Person]
+  films: [Film]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Film {
+  id: ID!
+  title: String
+  episodeID: Int
+  openingCrawl: String
+  director: String
+  producers: [String]
+  releaseDate: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  species: [Species]
+  starships: [Starship]
+  vehicles: [Vehicle]
+  characters: [Person]
+  planets: [Planet]
+}
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
