@@ -1,0 +1,17 @@
+type User {
+  id: ID!
+  email: String
+  createdAtAt: DateTime
+}
+
+type AuthenticatedUser {
+  user: User
+  token: String
+}
+
+mutation signup($email: String!, $password: String!) {
+  signup(email: $email, password: $password) {
+    email
+    password
+  }
+}
