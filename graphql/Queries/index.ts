@@ -16,6 +16,16 @@ export const LOGIN_MUTATION = gql`
   }
 `
 
+export const USER = gql`
+  query User {
+    me {
+      id
+      email
+      createdAtAt
+    }
+  }
+`
+
 export const PEOPLE = gql`
   query People {
     allPeople {
