@@ -1,14 +1,18 @@
 import Layout from "@components/Layout"
-import { useMutation } from "@apollo/react-hooks"
-import { SIGNUP_MUTATION } from "graphql/Queries"
+import { useMutation, useQuery } from "@apollo/react-hooks"
+import { PEOPLE, SIGNUP_MUTATION } from "graphql/Queries"
 import { AUTH_TOKEN } from "types/types.d"
 import { useHistory } from "react-router-dom"
 import { FC, useState } from "react"
+import { useRouter } from "next/router"
 
 interface SignUpProps {}
 
 const SignUp: FC<SignUpProps> = () => {
-  const history = useHistory()
+  const { data, loading, error } = useQuery(PEOPLE)
+  const router = useRouter()
+
+  console.log("data: ", { data })
 
   const [formState, setFormState] = useState({
     login: true,
@@ -23,7 +27,7 @@ const SignUp: FC<SignUpProps> = () => {
     },
     onCompleted: ({ signup }) => {
       localStorage.setItem(AUTH_TOKEN, signup.token)
-      history.push("/")
+      router.push("/")
     },
   })
 
@@ -81,9 +85,9 @@ const SignUp: FC<SignUpProps> = () => {
 
             <div className="flex justify-center items-center mt-6">
               <button
-                className={`bg-green py-2 px-4 text-sm text-white rounded border border-green focus:outline-none focus:border-green-dark`}
+                className={`bg-green px-3 py-2 w text-sm text-white rounded border border-green focus:outline-none focus:border-green-dark`}
               >
-                {formState.login ? "login" : "create account"}
+                {formState.login ? "sign up" : "create account"}
               </button>
               <button
                 className="pointer button mx-5"
