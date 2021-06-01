@@ -1,17 +1,42 @@
-import * as React from "react";
-import Layout from "@components/Layout";
+import * as React from "react"
+import Layout from "@components/Layout"
+import { useMutation } from "@apollo/client"
+import { LOGIN_MUTATION } from "graphql/Queries"
+import { AUTH_TOKEN } from "types/types.d"
+import { useRouter } from "next/router"
 
 interface LoginProps {}
 
 const Login: React.FC<LoginProps> = () => {
+  const router = useRouter()
+
+  const [formState, setFormState] = React.useState({
+    login: true,
+    email: "",
+    password: "",
+  })
+
+  const [login] = useMutation(LOGIN_MUTATION, {
+    variables: {
+      email: formState.email,
+      password: formState.password,
+    },
+    onCompleted: ({ login }) => {
+      localStorage.setItem(AUTH_TOKEN, login.token)
+      router.push("/")
+    },
+  })
+
   const handleFormSubmit = (e: any) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    let email = e.target.elements.email?.value;
-    let password = e.target.elements.password?.value;
+    let email = e.target.elements.email?.value
+    let password = e.target.elements.password?.value
 
-    console.log(email, password);
-  };
+    login({
+      variables: { email: email, password: password },
+    })
+  }
   return (
     <Layout title="Sign in">
       <div className="h-screen flex bg-gray-bg1">
@@ -28,6 +53,13 @@ const Login: React.FC<LoginProps> = () => {
                 className={`w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4`}
                 id="email"
                 placeholder="Your Email"
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    email: e.target.value,
+                  })
+                }
+                value={formState.email}
               />
             </div>
             <div>
@@ -37,6 +69,13 @@ const Login: React.FC<LoginProps> = () => {
                 className={`w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4`}
                 id="password"
                 placeholder="Your Password"
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    password: e.target.value,
+                  })
+                }
+                value={formState.password}
               />
             </div>
 
@@ -51,7 +90,7 @@ const Login: React.FC<LoginProps> = () => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
