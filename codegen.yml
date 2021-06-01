@@ -3,3 +3,4 @@ documents: ./graphql/**/*.graphql
 generates:
   ./types.ts:
     - typescript
+    - typescript-operations
