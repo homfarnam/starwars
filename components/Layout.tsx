@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react"
+import React, { ReactNode } from "react"
 import Head from "next/head"
 import Footer from "./Footer"
 import Header from "./Header"
@@ -10,7 +10,7 @@ type Props = {
 
 const Layout = ({ children, title = "This is the default title" }: Props) => {
   return (
-    <div className="flex flex-col min-h-screen justify-between bg-backbody-100">
+    <div className="flex flex-col h-screen justify-between bg-backbody-100">
       <Head>
         <title>{title}</title>
         <meta charSet="utf-8" />
