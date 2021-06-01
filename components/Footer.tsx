@@ -28,7 +28,7 @@ const Footer: React.FC<FooterProps> = () => {
           <div className="flex flex-col flex-wrap space-y-12">
             <div>
               <span className="text-sm font-bold opacity-50">
-                © 2020 Farnam Homayounfar
+                © 2021 Farnam Homayounfar
               </span>
             </div>
           </div>
