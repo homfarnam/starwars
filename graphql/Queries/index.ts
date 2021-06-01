@@ -15,3 +15,36 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `
+
+export const PEOPLE = gql`
+  query People {
+    allPeople {
+      id
+      name
+      birthYear
+      eyeColor
+      gender
+      height
+      hairColor
+      mass
+      skinColor
+      homeworld {
+        id
+      }
+      films {
+        id
+      }
+      species {
+        id
+      }
+      image
+      starships {
+        id
+      }
+      vehicles {
+        id
+      }
+      createdAt
+    }
+  }
+`
