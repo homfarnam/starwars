@@ -1,8 +1,7 @@
 import React, { ReactNode, useEffect, useState } from "react"
-import Link from "next/link"
 import Head from "next/head"
-import { AUTH_TOKEN } from "types/types.d"
-import { useRouter, Router } from "next/router"
+import Footer from "./Footer"
+import Header from "./Header"
 
 type Props = {
   children?: ReactNode
@@ -10,52 +9,16 @@ type Props = {
 }
 
 const Layout = ({ children, title = "This is the default title" }: Props) => {
-  const [AuthToken, setAuthToken] = useState<any>()
-  const router = useRouter()
-
-  useEffect(() => {
-    setAuthToken(localStorage.getItem(AUTH_TOKEN))
-  }, [])
-
   return (
-    <div>
+    <div className="flex flex-col min-h-screen justify-between bg-backbody-100">
       <Head>
         <title>{title}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <header className="w-full flex">
-        <nav className="flex w-6/12 justify-around m-auto py-2">
-          <Link href="/">
-            <a>Home</a>
-          </Link>
-
-          {!AuthToken && (
-            <div className="flex">
-              <Link href="/signup">Sign up</Link>
-            </div>
-          )}
-
-          {AuthToken ? (
-            <div
-              className="cursor-pointer"
-              onClick={() => {
-                localStorage.removeItem(AUTH_TOKEN)
-                router.push(`/`)
-              }}
-            >
-              logout
-            </div>
-          ) : (
-            <Link href="/login">login</Link>
-          )}
-        </nav>
-      </header>
+      <Header />
       {children}
-      <footer>
-        <hr />
-        <span>I'm here to stay (Footer)</span>
-      </footer>
+      <Footer />
     </div>
   )
 }
