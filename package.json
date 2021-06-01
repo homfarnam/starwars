@@ -9,7 +9,8 @@
     "format": "prettier --write **/*.{js,ts,tsx}",
     "schemagen": "apollo client:download-schema --endpoint='https://fe-case-study.vercel.app/api/graphql' schema.graphqls",
     "codegen": "yarn schemagen && graphql-let",
-    "types": "apollo client:codegen --localSchemaFile=./schema.graphqls --includes=./graphql/**/*.ts --target=typescript"
+    "types": "apollo client:codegen --localSchemaFile=./schema.graphqls --includes=./graphql/**/*.ts --target=typescript",
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@apollo/react-hooks": "^4.0.0",
@@ -17,8 +18,11 @@
     "@graphql-codegen/introspection": "1.17.8",
     "@graphql-codegen/typescript": "1.17.8",
     "@graphql-codegen/typescript-operations": "1.17.8",
-    "@graphql-codegen/typescript-react-apollo": "1.17.8",
+    "@graphql-codegen/typescript-react-apollo": "latest",
     "@tailwindcss/forms": "^0.3.2",
+    "@types/react-router": "^5.1.14",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/store": "^2.0.2",
     "apollo": "^2.33.4",
     "apollo-boost": "^0.4.9",
     "apollo-cache-inmemory": "^1.6.6",
@@ -33,7 +37,9 @@
     "next-with-apollo": "^5.1.1",
     "prettier": "^2.3.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
+    "store": "^2.0.12"
   },
   "devDependencies": {
     "@graphql-codegen/import-types-preset": "^1.18.2",
