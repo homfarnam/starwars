@@ -1,4 +1,5 @@
 schema: https://fe-case-study.vercel.app/api/graphql
+documents: ./graphql/**/*.graphql
 generates:
-  src/types.ts:
+  ./types.ts:
     - typescript
