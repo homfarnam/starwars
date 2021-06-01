@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = () => {
       <nav className="flex w-full justify-center m-auto py-2">
         <div className="w-4/12"></div>
         <div className="flex justify-center space-x-5 text-lg w-4/12">
-          <Link href="/home">
+          <Link href="/">
             <a>Home</a>
           </Link>
 
