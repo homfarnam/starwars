@@ -1,12 +1,31 @@
 import Layout from "@components/Layout"
-import * as React from "react"
 import { useMutation } from "@apollo/react-hooks"
-import { register } from "graphql/Queries"
+import { SIGNUP_MUTATION } from "graphql/Queries"
+import { AUTH_TOKEN } from "types/types.d"
+import { useHistory } from "react-router-dom"
+import { FC, useState } from "react"
 
 interface SignUpProps {}
 
-const SignUp: React.FC<SignUpProps> = () => {
-  const [signup] = useMutation(register)
+const SignUp: FC<SignUpProps> = () => {
+  const history = useHistory()
+
+  const [formState, setFormState] = useState({
+    login: true,
+    email: "",
+    password: "",
+  })
+
+  const [signup] = useMutation(SIGNUP_MUTATION, {
+    variables: {
+      email: formState.email,
+      password: formState.password,
+    },
+    onCompleted: ({ signup }) => {
+      localStorage.setItem(AUTH_TOKEN, signup.token)
+      history.push("/")
+    },
+  })
 
   const handleFormSubmit = (e: any) => {
     e.preventDefault()
@@ -23,7 +42,7 @@ const SignUp: React.FC<SignUpProps> = () => {
       <div className="h-screen flex bg-gray-bg1">
         <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
           <h1 className="text-2xl font-medium text-primary mt-4 mb-12 text-center">
-            Sign up 🔐
+            {formState.login ? "Login 🔐" : "Sign Up 🔐"}
           </h1>
 
           <form onSubmit={handleFormSubmit}>
@@ -34,6 +53,13 @@ const SignUp: React.FC<SignUpProps> = () => {
                 className={`w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4`}
                 id="email"
                 placeholder="Your Email"
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    email: e.target.value,
+                  })
+                }
+                value={formState.email}
               />
             </div>
             <div>
@@ -43,6 +69,13 @@ const SignUp: React.FC<SignUpProps> = () => {
                 className={`w-full p-2 text-primary border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4`}
                 id="password"
                 placeholder="Your Password"
+                onChange={(e) =>
+                  setFormState({
+                    ...formState,
+                    password: e.target.value,
+                  })
+                }
+                value={formState.password}
               />
             </div>
 
@@ -50,7 +83,20 @@ const SignUp: React.FC<SignUpProps> = () => {
               <button
                 className={`bg-green py-2 px-4 text-sm text-white rounded border border-green focus:outline-none focus:border-green-dark`}
               >
-                Sign up
+                {formState.login ? "login" : "create account"}
+              </button>
+              <button
+                className="pointer button mx-5"
+                onClick={(e: any) =>
+                  setFormState({
+                    ...formState,
+                    login: !formState.login,
+                  })
+                }
+              >
+                {formState.login
+                  ? "need to create an account?"
+                  : "already have an account?"}
               </button>
             </div>
           </form>
