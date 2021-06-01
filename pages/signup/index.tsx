@@ -1,21 +1,16 @@
 import Layout from "@components/Layout"
-import { useMutation, useQuery } from "@apollo/react-hooks"
-import { PEOPLE, SIGNUP_MUTATION } from "graphql/Queries"
+import { useMutation } from "@apollo/react-hooks"
+import { SIGNUP_MUTATION } from "graphql/Queries"
 import { AUTH_TOKEN } from "types/types.d"
-import { useHistory } from "react-router-dom"
 import { FC, useState } from "react"
 import { useRouter } from "next/router"
 
 interface SignUpProps {}
 
 const SignUp: FC<SignUpProps> = () => {
-  const { data, loading, error } = useQuery(PEOPLE)
   const router = useRouter()
 
-  console.log("data: ", { data })
-
   const [formState, setFormState] = useState({
-    login: true,
     email: "",
     password: "",
   })
@@ -43,10 +38,10 @@ const SignUp: FC<SignUpProps> = () => {
   }
   return (
     <Layout title="Sign up">
-      <div className="h-screen flex bg-gray-bg1">
-        <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-16">
+      <div className="flex">
+        <div className="w-full max-w-md m-auto bg-white rounded-lg border-transparent shadow-lg py-10 px-16">
           <h1 className="text-2xl font-medium text-primary mt-4 mb-12 text-center">
-            {formState.login ? "Login 🔐" : "Sign Up 🔐"}
+            Sign Up 🔐
           </h1>
 
           <form onSubmit={handleFormSubmit}>
@@ -87,20 +82,7 @@ const SignUp: FC<SignUpProps> = () => {
               <button
                 className={`bg-green px-3 py-2 w text-sm text-white rounded border border-green focus:outline-none focus:border-green-dark`}
               >
-                {formState.login ? "sign up" : "create account"}
-              </button>
-              <button
-                className="pointer button mx-5"
-                onClick={(e: any) =>
-                  setFormState({
-                    ...formState,
-                    login: !formState.login,
-                  })
-                }
-              >
-                {formState.login
-                  ? "need to create an account?"
-                  : "already have an account?"}
+                sign up
               </button>
             </div>
           </form>
