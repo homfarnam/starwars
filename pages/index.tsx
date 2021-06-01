@@ -7,11 +7,13 @@ const IndexPage = () => {
 
   console.log("data: ", { data })
 
-  if (loading) return <p>loading</p>
+  if (error) console.log({ error })
 
   return (
     <Layout title="Home | Next.js + TypeScript Example">
-      <div>hi</div>
+      <div className="flex w-full justify-center items-start h-[100px] text-3xl">
+        <h2> 🚀 Front-end development task (Star Wars Edition)</h2>
+      </div>
     </Layout>
   )
 }
