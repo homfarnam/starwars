@@ -1,23 +1,29 @@
-import Document, {
-  Head,
-  Main,
-  NextScript,
-  Html,
-  DocumentContext,
-} from "next/document"
+import Document, { Head, Html, Main, NextScript } from "next/document"
 
-class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
-    const initialProps = await Document.getInitialProps(ctx)
-    return { ...initialProps }
+// Import styled components ServerStyleSheet
+import { ServerStyleSheet } from "styled-components"
+
+export default class MyDocument extends Document {
+  static getInitialProps({ renderPage }: any) {
+    // Step 1: Create an instance of ServerStyleSheet
+    const sheet = new ServerStyleSheet()
+
+    // Step 2: Retrieve styles from components in the page
+    const page = renderPage(
+      (App: any) => (props: any) => sheet.collectStyles(<App {...props} />)
+    )
+
+    // Step 3: Extract the styles as <style> tags
+    const styleTags = sheet.getStyleElement()
+
+    // Step 4: Pass styleTags as a prop
+    return { ...page, styleTags }
   }
 
   render() {
     return (
-      <Html lang="en">
-        <Head>
-          {/* <link rel="stylesheet" href="./.next/static/style.css" media="all" /> */}
-        </Head>
+      <Html>
+        <Head>{/* Step 5: Output the styles in the head  */}</Head>
         <body>
           <Main />
           <NextScript />
@@ -26,5 +32,3 @@ class MyDocument extends Document {
     )
   }
 }
-
-export default MyDocument
