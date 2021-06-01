@@ -4,7 +4,7 @@ import "tailwindcss/tailwind.css"
 import { client } from "utils/apollo"
 import "../styles/index.css"
 
-function MyApp({ Component, pageProps, apollo }: any) {
+function MyApp({ Component, pageProps }: any) {
   return (
     <>
       <ApolloProvider client={client}>
