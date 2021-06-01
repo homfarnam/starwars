@@ -30,7 +30,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
             <a>Home</a>
           </Link>
 
-          {AuthToken && (
+          {!AuthToken && (
             <div className="flex">
               <Link href="/signup">Sign up</Link>
             </div>
