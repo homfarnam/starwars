@@ -1,15 +1,17 @@
-import Layout from "@components/Layout";
-import Link from "next/link";
+import { useQuery } from "@apollo/client"
+import Layout from "@components/Layout"
+import { USER } from "graphql/Queries"
 
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </p>
-  </Layout>
-);
+const IndexPage = () => {
+  const { data } = useQuery(USER)
 
-export default IndexPage;
+  console.log("data: ", { data })
+
+  return (
+    <Layout title="Home | Next.js + TypeScript Example">
+      <div>hi</div>
+    </Layout>
+  )
+}
+
+export default IndexPage
