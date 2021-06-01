@@ -1,13 +1,13 @@
 import { ApolloProvider } from "@apollo/react-hooks"
-import withData from "../utils/apollo"
 import Head from "next/head"
 import "tailwindcss/tailwind.css"
+import { client } from "utils/apollo"
 import "../styles/index.css"
 
 function MyApp({ Component, pageProps, apollo }: any) {
   return (
     <>
-      <ApolloProvider client={apollo}>
+      <ApolloProvider client={client}>
         <Head>
           <meta
             name="viewport"
@@ -22,4 +22,4 @@ function MyApp({ Component, pageProps, apollo }: any) {
 }
 
 // Wraps all components in the tree with the data provider
-export default withData(MyApp)
+export default MyApp
