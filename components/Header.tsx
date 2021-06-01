@@ -10,7 +10,7 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = () => {
   const [AuthToken, setAuthToken] = useState<any>()
   const router = useRouter()
-  const { data, error } = useQuery(USER)
+  const { data } = useQuery(USER)
 
   console.log("user: ", data)
 

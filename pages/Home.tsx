@@ -7,7 +7,7 @@ import Image from "next/image"
 interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = () => {
-  const { data, error } = useQuery(PEOPLE)
+  const { data } = useQuery(PEOPLE)
 
   console.log(data?.allPeople)
 
