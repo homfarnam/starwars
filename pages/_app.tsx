@@ -1,9 +1,8 @@
-import "../styles/index.css";
-import "tailwindcss/tailwind.css";
-
-import { ApolloProvider } from "@apollo/react-hooks";
-import withData from "../utils/apollo";
-import Head from "next/head";
+import { ApolloProvider } from "@apollo/react-hooks"
+import withData from "../utils/apollo"
+import Head from "next/head"
+import "tailwindcss/tailwind.css"
+import "../styles/index.css"
 
 function MyApp({ Component, pageProps, apollo }: any) {
   return (
@@ -19,8 +18,8 @@ function MyApp({ Component, pageProps, apollo }: any) {
         <Component {...pageProps} />
       </ApolloProvider>
     </>
-  );
+  )
 }
 
 // Wraps all components in the tree with the data provider
-export default withData(MyApp);
+export default withData(MyApp)
