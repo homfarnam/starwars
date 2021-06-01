@@ -1,11 +1,13 @@
-import { useQuery } from "@apollo/client"
+import { useQuery } from "@apollo/react-hooks"
 import Layout from "@components/Layout"
-import { USER } from "graphql/Queries"
+import { PEOPLE, USER } from "graphql/Queries"
 
 const IndexPage = () => {
-  const { data } = useQuery(USER)
+  const { data, loading, error } = useQuery(PEOPLE)
 
   console.log("data: ", { data })
+
+  if (loading) return <p>loading</p>
 
   return (
     <Layout title="Home | Next.js + TypeScript Example">
