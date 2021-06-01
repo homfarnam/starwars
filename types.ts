@@ -245,3 +245,14 @@ export type SignupMutation = (
     & Pick<AuthenticatedUser, '[object Object]'>
   )> }
 );
+
+export type UserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserQuery = (
+  { __typename?: 'Query' }
+  & { me?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, '[object Object]' | '[object Object]' | '[object Object]'>
+  )> }
+);
