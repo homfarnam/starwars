@@ -24,7 +24,7 @@ const Header: React.FC<HeaderProps> = () => {
         <div className="w-4/12"></div>
         <div className="flex justify-center space-x-5 text-lg w-4/12">
           <Link href="/">
-            <a>Home</a>
+            <a>Charachters</a>
           </Link>
 
           {!AuthToken && (
