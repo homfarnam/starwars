@@ -1,5 +1,5 @@
-import React, { FC, ReactElement, ReactText } from "react"
-import { toast, ToastContent, ToastOptions } from "react-toastify"
+import React, { FC } from "react"
+import { toast } from "react-toastify"
 import {
   FaInfo,
   FaCheck,
