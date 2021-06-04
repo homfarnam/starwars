@@ -5,6 +5,7 @@ import { AUTH_TOKEN } from "types/types.d"
 import { useRouter } from "next/router"
 import { FC, useCallback, useState } from "react"
 import ToastMessage from "@components/Toast"
+import Cookies from "js-cookie"
 
 interface LoginProps {}
 
@@ -28,6 +29,8 @@ const Login: FC<LoginProps> = () => {
     },
     onCompleted: ({ login }) => {
       localStorage.setItem(AUTH_TOKEN, login.token)
+      Cookies.set(AUTH_TOKEN, login.token)
+
       notify("success", "Successfully logined!")
       router.push("/")
     },

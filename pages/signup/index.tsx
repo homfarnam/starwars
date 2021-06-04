@@ -5,6 +5,7 @@ import { AUTH_TOKEN } from "types/types.d"
 import { FC, useCallback, useState } from "react"
 import { useRouter } from "next/router"
 import ToastMessage from "@components/Toast"
+import Cookies from "js-cookie"
 
 interface SignUpProps {}
 
@@ -27,6 +28,8 @@ const SignUp: FC<SignUpProps> = () => {
     },
     onCompleted: ({ signup }) => {
       localStorage.setItem(AUTH_TOKEN, signup.token)
+      Cookies.set(AUTH_TOKEN, signup.token)
+
       notify("success", "Successfully registered!")
       router.push("/")
     },
