@@ -2,8 +2,7 @@ import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client"
 import fetch from "isomorphic-unfetch"
 import { setContext } from "@apollo/client/link/context"
 import { AUTH_TOKEN } from "types/types.d"
-
-import store from "store"
+import Cookies from "js-cookie"
 
 // Update the GraphQL endpoint to any instance of GraphQL that you like
 // const GRAPHQL_URL = "https://fe-case-study.vercel.app/api"
@@ -14,13 +13,13 @@ const GRAPHQL_URL =
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
 
-  const token = store.get(AUTH_TOKEN)
+  const newToken = Cookies.get(AUTH_TOKEN)
 
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token ? `${token}` : "",
+      authorization: newToken ? `${newToken}` : "",
     },
   }
 })
