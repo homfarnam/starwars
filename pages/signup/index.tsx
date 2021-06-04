@@ -2,13 +2,18 @@ import Layout from "@components/Layout"
 import { useMutation } from "@apollo/react-hooks"
 import { SIGNUP_MUTATION } from "graphql/Queries"
 import { AUTH_TOKEN } from "types/types.d"
-import { FC, useState } from "react"
+import { FC, useCallback, useState } from "react"
 import { useRouter } from "next/router"
+import ToastMessage from "@components/Toast"
 
 interface SignUpProps {}
 
 const SignUp: FC<SignUpProps> = () => {
   const router = useRouter()
+
+  const notify = useCallback((type, message) => {
+    ToastMessage({ type, message })
+  }, [])
 
   const [formState, setFormState] = useState({
     email: "",
@@ -22,7 +27,11 @@ const SignUp: FC<SignUpProps> = () => {
     },
     onCompleted: ({ signup }) => {
       localStorage.setItem(AUTH_TOKEN, signup.token)
+      notify("success", "Successfully registered!")
       router.push("/")
+    },
+    onError: () => {
+      notify("error", "Can't register!")
     },
   })
 
