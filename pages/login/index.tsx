@@ -1,16 +1,21 @@
-import * as React from "react"
 import Layout from "@components/Layout"
 import { useMutation } from "@apollo/client"
 import { LOGIN_MUTATION } from "graphql/Queries"
 import { AUTH_TOKEN } from "types/types.d"
 import { useRouter } from "next/router"
+import { FC, useCallback, useState } from "react"
+import ToastMessage from "@components/Toast"
 
 interface LoginProps {}
 
-const Login: React.FC<LoginProps> = () => {
+const Login: FC<LoginProps> = () => {
   const router = useRouter()
 
-  const [formState, setFormState] = React.useState({
+  const notify = useCallback((type, message) => {
+    ToastMessage({ type, message })
+  }, [])
+
+  const [formState, setFormState] = useState({
     login: true,
     email: "",
     password: "",
@@ -23,7 +28,11 @@ const Login: React.FC<LoginProps> = () => {
     },
     onCompleted: ({ login }) => {
       localStorage.setItem(AUTH_TOKEN, login.token)
+      notify("success", "Successfully logined!")
       router.push("/")
+    },
+    onError: () => {
+      notify("error", "User not found!")
     },
   })
 
