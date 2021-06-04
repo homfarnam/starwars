@@ -26,9 +26,42 @@ export const USER = gql`
   }
 `
 
-export const PEOPLE = gql`
-  query People {
+export const ALLPEOPLE = gql`
+  query AllPeople {
     allPeople {
+      id
+      name
+      birthYear
+      eyeColor
+      gender
+      height
+      hairColor
+      mass
+      skinColor
+      homeworld {
+        id
+      }
+      films {
+        id
+      }
+      species {
+        id
+      }
+      image
+      starships {
+        id
+      }
+      vehicles {
+        id
+      }
+      createdAt
+    }
+  }
+`
+
+export const PERSON = gql`
+  query People($id: ID!) {
+    person(id: $id) {
       id
       name
       birthYear

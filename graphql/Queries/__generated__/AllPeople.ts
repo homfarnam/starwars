@@ -4,35 +4,35 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: People
+// GraphQL query operation: AllPeople
 // ====================================================
 
-export interface People_person_homeworld {
+export interface AllPeople_allPeople_homeworld {
   __typename: "Planet";
   id: string;
 }
 
-export interface People_person_films {
+export interface AllPeople_allPeople_films {
   __typename: "Film";
   id: string;
 }
 
-export interface People_person_species {
+export interface AllPeople_allPeople_species {
   __typename: "Species";
   id: string;
 }
 
-export interface People_person_starships {
+export interface AllPeople_allPeople_starships {
   __typename: "Starship";
   id: string;
 }
 
-export interface People_person_vehicles {
+export interface AllPeople_allPeople_vehicles {
   __typename: "Vehicle";
   id: string;
 }
 
-export interface People_person {
+export interface AllPeople_allPeople {
   __typename: "Person";
   id: string;
   name: string | null;
@@ -43,19 +43,15 @@ export interface People_person {
   hairColor: string | null;
   mass: number | null;
   skinColor: string | null;
-  homeworld: People_person_homeworld | null;
-  films: (People_person_films | null)[] | null;
-  species: People_person_species | null;
+  homeworld: AllPeople_allPeople_homeworld | null;
+  films: (AllPeople_allPeople_films | null)[] | null;
+  species: AllPeople_allPeople_species | null;
   image: string | null;
-  starships: (People_person_starships | null)[] | null;
-  vehicles: (People_person_vehicles | null)[] | null;
+  starships: (AllPeople_allPeople_starships | null)[] | null;
+  vehicles: (AllPeople_allPeople_vehicles | null)[] | null;
   createdAt: any | null;
 }
 
-export interface People {
-  person: People_person | null;
-}
-
-export interface PeopleVariables {
-  id: string;
+export interface AllPeople {
+  allPeople: (AllPeople_allPeople | null)[] | null;
 }
