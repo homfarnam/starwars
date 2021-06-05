@@ -5,11 +5,14 @@ import { client } from "utils/apollo"
 import "../styles/index.css"
 import "react-toastify/dist/ReactToastify.min.css"
 import { ToastContainer } from "react-toastify"
+import { useApollo } from "../utils/apolloClient"
 
 function MyApp({ Component, pageProps }: any) {
+  const apolloClient = useApollo(pageProps)
+
   return (
     <>
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apolloClient}>
         <Head>
           <meta
             name="viewport"
