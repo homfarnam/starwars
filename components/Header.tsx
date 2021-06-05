@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { AUTH_TOKEN } from "types/types.d"
 import { useQuery } from "@apollo/react-hooks"
 import { USER } from "graphql/Queries"
+import Cookies from "js-cookie"
 
 interface HeaderProps {}
 
@@ -38,6 +39,7 @@ const Header: React.FC<HeaderProps> = () => {
               className="cursor-pointer"
               onClick={() => {
                 localStorage.removeItem(AUTH_TOKEN)
+                Cookies.remove(AUTH_TOKEN)
                 router.push(`/`)
                 router.reload()
               }}
