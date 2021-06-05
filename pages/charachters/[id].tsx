@@ -1,14 +1,22 @@
-import { ALLPEOPLE, PERSON } from "graphql/Queries"
-import { client } from "../../utils/apollo"
-import { FC, useEffect } from "react"
+import { PERSON } from "graphql/Queries"
+import { FC } from "react"
+import { initializeApollo, addApolloState } from "../../utils/apolloClient"
 import { Context } from "vm"
-import cookies from "next-cookies"
 import { useRouter } from "next/router"
 import Layout from "@components/Layout"
 
 interface PersonProps {
   person: any[]
 }
+
+const parseCookie = (str: any) =>
+  str
+    .split(";")
+    .map((v: any) => v.split("="))
+    .reduce((acc: any, v: any) => {
+      acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim())
+      return acc
+    }, {})
 
 const Person: FC<PersonProps> = ({ person }) => {
   const router = useRouter()
@@ -74,24 +82,25 @@ const Person: FC<PersonProps> = ({ person }) => {
 
 export const getServerSideProps = async (context: Context) => {
   const id = context.params.id
-  const tkn = cookies(context).auth_token
-  const token = context.req.headers.cookie
+  const token = parseCookie(context.req.headers.cookie)
 
-  const { data } = await client.query({
+  console.log("token:", token["auth-token"])
+
+  const apolloClient = initializeApollo()
+
+  const { data } = await apolloClient.query({
     query: PERSON,
     variables: { id },
     context: {
       headers: {
-        authorization: token,
+        authorization: token["auth-token"],
       },
     },
   })
 
-  return {
-    props: {
-      person: data,
-    },
-  }
+  return addApolloState(apolloClient, {
+    props: data,
+  })
 }
 
 export default Person
