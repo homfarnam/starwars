@@ -5,18 +5,12 @@ import Image from "next/image"
 import { toast } from "react-toastify"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { AUTH_TOKEN } from "types/types.d"
-import Cookies from "js-cookie"
 
 const IndexPage = () => {
   const { data, error } = useQuery(ALLPEOPLE)
   const [AllPeople, setAllPeople] = useState<any>(null)
   const [Search, setSearch] = useState<string>("")
   const [NewData, setNewData] = useState<any>(null)
-
-  const token = Cookies.get(AUTH_TOKEN)
-
-  console.log(token)
 
   useEffect(() => {
     if (data) {
