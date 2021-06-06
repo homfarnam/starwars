@@ -22,8 +22,6 @@ const Person: FC<PersonProps> = ({ person }) => {
   const router = useRouter()
   const { id } = router.query
 
-  console.log("id:", id)
-
   console.log("person : ", person)
   return (
     <Layout title={`Charchter ${id}`}>
@@ -32,68 +30,18 @@ const Person: FC<PersonProps> = ({ person }) => {
   )
 }
 
-// export const getStaticPaths = async (context: Context) => {
-//   const tkn = cookies(context).auth_token
-
-//   const { data } = await client.query({
-//     query: ALLPEOPLE,
-//   })
-
-//   const chars = data.map((item: { id: number }) => {
-//     return {
-//       params: {
-//         id: item.id,
-//       },
-//       context: {
-//         headers: {
-//           authorization: tkn,
-//         },
-//       },
-//     }
-//   })
-
-//   return {
-//     paths: chars,
-//     fallback: false,
-//   }
-// }
-
-// export const getStaticProps = async (context: Context) => {
-//   const id = context.params.id
-//   const tkn = cookies(context).auth_token
-
-//   const { data } = await client.query({
-//     query: PERSON,
-//     variables: { id },
-//     context: {
-//       headers: {
-//         authorization: tkn,
-//       },
-//     },
-//   })
-
-//   return {
-//     props: {
-//       person: data,
-//     },
-//     revalidate: 1,
-//   }
-// }
-
 export const getServerSideProps = async (context: Context) => {
   const id = context.params.id
   const token = parseCookie(context.req.headers.cookie)
 
-  console.log("token:", token["auth-token"])
-
-  const apolloClient = initializeApollo()
+  const apolloClient = initializeApollo(null)
 
   const { data } = await apolloClient.query({
     query: PERSON,
     variables: { id },
     context: {
       headers: {
-        authorization: token["auth-token"],
+        authorization: token["auth_token"],
       },
     },
   })
