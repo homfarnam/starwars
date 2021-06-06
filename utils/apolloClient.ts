@@ -1,6 +1,10 @@
 import { useMemo } from "react"
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client"
-import { concatPagination } from "@apollo/client/utilities"
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from "@apollo/client"
 import merge from "deepmerge"
 import isEqual from "lodash/isEqual"
 import { AUTH_TOKEN } from "types/types.d"
@@ -8,7 +12,7 @@ import Cookies from "js-cookie"
 
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__"
 
-let apolloClient: any = null
+let apolloClient: ApolloClient<NormalizedCacheObject>
 
 const GRAPHQL_URL =
   process.env.API_URL || "https://fe-case-study.vercel.app/api"
@@ -25,15 +29,7 @@ function createApolloClient() {
         authorization: newToken ? `${newToken}` : "",
       },
     }),
-    cache: new InMemoryCache({
-      typePolicies: {
-        Query: {
-          fields: {
-            allPosts: concatPagination(),
-          },
-        },
-      },
-    }),
+    cache: new InMemoryCache(),
   })
 }
 
@@ -69,7 +65,7 @@ export function initializeApollo(initialState: any = null) {
 }
 
 export function addApolloState(client: any, pageProps: any) {
-  if (pageProps?.props) {
+  if (pageProps?.props?.[APOLLO_STATE_PROP_NAME]) {
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract()
   }
 
